@@ -9,7 +9,7 @@ const IntentLogo = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Logo image */}
+      {/* Logo image with clear background */}
       <motion.div
         className="relative"
         whileHover={{ scale: 1.05 }}
@@ -17,12 +17,11 @@ const IntentLogo = () => {
         <img
           src={intentLogo}
           alt="Intent Logo"
-          className="w-12 h-12 object-contain"
-        />
-        <motion.div
-          className="absolute -inset-2 bg-primary/30 rounded-full blur-lg -z-10"
-          animate={{ opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(0,212,255,0.4)]"
+          style={{ 
+            background: 'transparent',
+            mixBlendMode: 'normal'
+          }}
         />
       </motion.div>
       
