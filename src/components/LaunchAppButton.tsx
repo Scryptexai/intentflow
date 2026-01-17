@@ -7,7 +7,7 @@ interface LaunchAppButtonProps {
   external?: boolean;
 }
 
-const LaunchAppButton = ({ to = "/app", external = false }: LaunchAppButtonProps) => {
+const LaunchAppButton = ({ to = "/dashboard", external = false }: LaunchAppButtonProps) => {
   const buttonContent = (
     <>
       <Rocket className="w-4 h-4" />

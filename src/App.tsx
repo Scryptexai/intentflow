@@ -9,7 +9,6 @@ import { config as wagmiConfig } from "@/lib/wagmi";
 import { WalletProvider } from "@/contexts/WalletContext";
 import { AccessLevelProvider } from "@/contexts/AccessLevelContext";
 import Index from "./pages/Index";
-import AppPage from "./pages/App";
 import Dashboard from "./pages/Dashboard";
 import CreateCampaign from "./pages/CreateCampaign";
 import Proofs from "./pages/Proofs";
@@ -30,7 +29,6 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/app" element={<AppPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create" element={<CreateCampaign />} />
                 <Route path="/proofs" element={<Proofs />} />
