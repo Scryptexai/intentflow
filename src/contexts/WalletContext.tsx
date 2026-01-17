@@ -300,14 +300,8 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (isConnected && isCorrectNetwork && address && !siweSession && !isSigning && !supabaseSession) {
-      const timer = setTimeout(() => {
-        signIn();
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [isConnected, isCorrectNetwork, address, siweSession, isSigning, signIn, supabaseSession]);
+  // REMOVED: Auto sign-in - now user must manually click "Connect Wallet" or "Sign In"
+  // Users can access pages without connecting wallet first
 
   useEffect(() => {
     if (siweSession && address && siweSession.message.address.toLowerCase() !== address.toLowerCase()) {
