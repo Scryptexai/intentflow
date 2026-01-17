@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import { useState } from "react";
 
 interface DApp {
   name: string;
@@ -54,6 +55,64 @@ const dapps: DApp[] = [
   }
 ];
 
+// Individual DApp card component with proper React state for image fallback
+const DAppCard = ({ dapp, index }: { dapp: DApp; index: number }) => {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <motion.a
+      key={dapp.name}
+      href={dapp.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      whileHover={{ scale: 1.02, y: -4 }}
+      className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,212,255,0.1)] transition-all duration-300"
+    >
+      {/* Category badge */}
+      <span className="absolute top-4 right-4 px-2 py-0.5 text-xs font-mono text-muted-foreground bg-muted/50 rounded">
+        {dapp.category}
+      </span>
+
+      <div className="flex items-start gap-4">
+        {/* Logo with safe fallback using React state */}
+        <div className="w-12 h-12 rounded-xl bg-muted/50 border border-border flex items-center justify-center overflow-hidden shrink-0">
+          {!imageError ? (
+            <img 
+              src={dapp.logo} 
+              alt={`${dapp.name} logo`}
+              className="w-8 h-8 object-contain"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <span className="text-lg font-bold text-primary">
+              {dapp.name[0]}
+            </span>
+          )}
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              {dapp.name}
+            </h3>
+            <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {dapp.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Hover gradient */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+    </motion.a>
+  );
+};
+
 const EcosystemDapps = () => {
   return (
     <section className="w-full py-16">
@@ -78,53 +137,7 @@ const EcosystemDapps = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto px-4">
         {dapps.map((dapp, index) => (
-          <motion.a
-            key={dapp.name}
-            href={dapp.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            whileHover={{ scale: 1.02, y: -4 }}
-            className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,212,255,0.1)] transition-all duration-300"
-          >
-            {/* Category badge */}
-            <span className="absolute top-4 right-4 px-2 py-0.5 text-xs font-mono text-muted-foreground bg-muted/50 rounded">
-              {dapp.category}
-            </span>
-
-            <div className="flex items-start gap-4">
-              {/* Logo */}
-              <div className="w-12 h-12 rounded-xl bg-muted/50 border border-border flex items-center justify-center overflow-hidden shrink-0">
-                <img 
-                  src={dapp.logo} 
-                  alt={`${dapp.name} logo`}
-                  className="w-8 h-8 object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold text-primary">${dapp.name[0]}</span>`;
-                  }}
-                />
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                    {dapp.name}
-                  </h3>
-                  <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {dapp.description}
-                </p>
-              </div>
-            </div>
-
-            {/* Hover gradient */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-          </motion.a>
+          <DAppCard key={dapp.name} dapp={dapp} index={index} />
         ))}
       </div>
 
