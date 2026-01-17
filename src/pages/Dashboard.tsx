@@ -19,19 +19,10 @@ type TabType = 'campaigns' | 'activity' | 'settings';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
-  const { isConnected, address, truncatedAddress, balance } = useWallet();
+  const { isConnected, address, truncatedAddress, balance, connect } = useWallet();
   const { accessLevel } = useAccessLevel();
   const { campaigns, activities, isLoading, isEmpty } = useDashboardData();
   const [activeTab, setActiveTab] = useState<TabType>('campaigns');
-
-  useEffect(() => {
-    if (!isConnected) {
-      toast.error('Please connect your wallet to access the dashboard');
-      navigate('/');
-    }
-  }, [isConnected, navigate]);
-
-  if (!isConnected) return null;
 
   const tabs = [
     { id: 'campaigns' as TabType, label: 'My Campaigns', icon: LayoutGrid },
@@ -40,6 +31,41 @@ const Dashboard: React.FC = () => {
   ];
 
   const tierColors = { base: 'text-muted-foreground', active: 'text-primary', advanced: 'text-usdc' };
+
+  // Not connected state - show connect wallet prompt
+  if (!isConnected) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main className="pt-24 pb-16">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-md mx-auto text-center"
+            >
+              <div className="glass rounded-2xl p-8 border border-border/50">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Zap className="w-8 h-8 text-primary" />
+                </div>
+                <h1 className="text-2xl font-display font-bold mb-3">Connect Your Wallet</h1>
+                <p className="text-muted-foreground mb-6">
+                  Connect your wallet to access your dashboard, create campaigns, and track your activity on Arc Network.
+                </p>
+                <Button variant="gradient" size="lg" onClick={connect} className="w-full">
+                  Connect Wallet
+                </Button>
+                <p className="text-xs text-muted-foreground mt-4">
+                  Supports MetaMask, WalletConnect, and Coinbase Wallet
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
