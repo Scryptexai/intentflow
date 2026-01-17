@@ -70,10 +70,49 @@ export function getTodayDateString(): string {
 }
 
 export async function fetchDAppsFromDatabase(): Promise<DbDApp[]> {
-  // Return empty array - arc_dapps table needs to be created
-  // This is a placeholder until the database schema is set up
-  console.log('arc_dapps table not yet configured');
-  return [];
+  try {
+    const { data, error } = await supabase
+      .from('arc_dapps')
+      .select('*')
+      .eq('is_active', true)
+      .order('is_featured', { ascending: false });
+    
+    if (error) {
+      console.error('Failed to fetch dApps:', error);
+      return [];
+    }
+    
+    // Transform database response to DbDApp format
+    return (data || []).map(dapp => {
+      // Parse actions from JSONB
+      let parsedActions: { action: string; verb: string }[] = [];
+      if (Array.isArray(dapp.actions)) {
+        parsedActions = dapp.actions
+          .filter((a): a is { action: string; verb: string } => 
+            typeof a === 'object' && a !== null && 'action' in a && 'verb' in a
+          );
+      }
+      
+      return {
+        id: dapp.id,
+        slug: dapp.slug,
+        name: dapp.name,
+        category: dapp.category,
+        description: dapp.description || '',
+        website_url: dapp.website_url,
+        icon_url: dapp.icon_url,
+        actions: parsedActions,
+        is_verified: dapp.is_verified,
+        is_featured: dapp.is_featured,
+        is_active: dapp.is_active,
+        target_contract: dapp.target_contract,
+        chain_id: dapp.chain_id,
+      };
+    });
+  } catch (err) {
+    console.error('Error fetching dApps:', err);
+    return [];
+  }
 }
 
 export async function generateDailyTasksAsync(
