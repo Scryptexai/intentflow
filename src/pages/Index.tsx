@@ -51,7 +51,7 @@ const Index = () => {
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 Built on Arc
               </motion.div>
-              <LaunchAppButton to="/app" />
+              <LaunchAppButton to="/dashboard" />
             </div>
           </div>
         </header>
