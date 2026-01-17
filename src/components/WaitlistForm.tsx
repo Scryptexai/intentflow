@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Loader2, Wallet, Twitter, ExternalLink } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const TWITTER_PROFILE_URL = "https://x.com/intent_sbs";
 
@@ -32,19 +34,42 @@ const WaitlistForm = () => {
     // Basic wallet address validation (ETH format)
     const ethAddressRegex = /^0x[a-fA-F0-9]{40}$/;
     if (!ethAddressRegex.test(walletAddress)) {
+      toast.error("Please enter a valid wallet address (0x...)");
       return;
     }
     
     setStatus("loading");
     
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    setStatus("success");
-    setWalletAddress("");
-    
-    // Reset after 3 seconds
-    setTimeout(() => setStatus("idle"), 3000);
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .insert({
+          wallet_address: walletAddress,
+          twitter_followed: hasFollowed
+        });
+      
+      if (error) {
+        if (error.code === '23505') { // Unique violation
+          toast.error("This wallet is already on the waitlist!");
+        } else {
+          throw error;
+        }
+        setStatus("idle");
+        return;
+      }
+      
+      setStatus("success");
+      setWalletAddress("");
+      toast.success("You're on the list! We'll be in touch soon.");
+      
+      // Reset after 3 seconds
+      setTimeout(() => setStatus("idle"), 3000);
+    } catch (error) {
+      console.error("Error joining waitlist:", error);
+      toast.error("Failed to join waitlist. Please try again.");
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 2000);
+    }
   };
 
   return (
@@ -137,6 +162,12 @@ const WaitlistForm = () => {
               <>
                 <Check className="w-4 h-4" />
                 Joined!
+              </>
+            )}
+            {status === "error" && (
+              <>
+                Try Again
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </motion.button>

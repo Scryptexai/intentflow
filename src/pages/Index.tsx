@@ -5,6 +5,8 @@ import IntentLogo from "@/components/IntentLogo";
 import WaitlistForm from "@/components/WaitlistForm";
 import FeatureCard from "@/components/FeatureCard";
 import SocialLinks from "@/components/SocialLinks";
+import EcosystemDapps from "@/components/EcosystemDapps";
+import LaunchAppButton from "@/components/LaunchAppButton";
 
 const features = [
   {
@@ -39,15 +41,18 @@ const Index = () => {
         <header className="w-full px-6 py-6">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <IntentLogo />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground font-mono"
-            >
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              Built on Arc
-            </motion.div>
+            <div className="flex items-center gap-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground font-mono"
+              >
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Built on Arc
+              </motion.div>
+              <LaunchAppButton to="/app" />
+            </div>
           </div>
         </header>
         
@@ -140,6 +145,11 @@ const Index = () => {
                 />
               ))}
             </div>
+          </div>
+
+          {/* Ecosystem dApps section */}
+          <div className="w-full max-w-6xl mx-auto mt-20">
+            <EcosystemDapps />
           </div>
         </main>
         
