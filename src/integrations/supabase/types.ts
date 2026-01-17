@@ -14,6 +14,152 @@ export type Database = {
   }
   public: {
     Tables: {
+      arc_dapps: {
+        Row: {
+          actions: Json
+          category: string
+          chain_id: number
+          created_at: string
+          description: string
+          icon_url: string | null
+          id: string
+          is_active: boolean
+          is_featured: boolean
+          is_verified: boolean
+          name: string
+          slug: string
+          target_contract: string | null
+          updated_at: string
+          website_url: string
+        }
+        Insert: {
+          actions?: Json
+          category: string
+          chain_id?: number
+          created_at?: string
+          description?: string
+          icon_url?: string | null
+          id?: string
+          is_active?: boolean
+          is_featured?: boolean
+          is_verified?: boolean
+          name: string
+          slug: string
+          target_contract?: string | null
+          updated_at?: string
+          website_url: string
+        }
+        Update: {
+          actions?: Json
+          category?: string
+          chain_id?: number
+          created_at?: string
+          description?: string
+          icon_url?: string | null
+          id?: string
+          is_active?: boolean
+          is_featured?: boolean
+          is_verified?: boolean
+          name?: string
+          slug?: string
+          target_contract?: string | null
+          updated_at?: string
+          website_url?: string
+        }
+        Relationships: []
+      }
+      campaigns: {
+        Row: {
+          actions_completed: string[] | null
+          caption: string
+          created_at: string
+          id: string
+          image_url: string | null
+          intent_category: string | null
+          is_minted: boolean
+          minted_at: string | null
+          proof_hash: string | null
+          share_count: number
+          target_dapps: string[] | null
+          updated_at: string
+          user_id: string | null
+          wallet_address: string
+        }
+        Insert: {
+          actions_completed?: string[] | null
+          caption: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          intent_category?: string | null
+          is_minted?: boolean
+          minted_at?: string | null
+          proof_hash?: string | null
+          share_count?: number
+          target_dapps?: string[] | null
+          updated_at?: string
+          user_id?: string | null
+          wallet_address: string
+        }
+        Update: {
+          actions_completed?: string[] | null
+          caption?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          intent_category?: string | null
+          is_minted?: boolean
+          minted_at?: string | null
+          proof_hash?: string | null
+          share_count?: number
+          target_dapps?: string[] | null
+          updated_at?: string
+          user_id?: string | null
+          wallet_address?: string
+        }
+        Relationships: []
+      }
+      daily_task_completions: {
+        Row: {
+          action: string
+          created_at: string
+          dapp_id: string | null
+          id: string
+          task_date: string
+          tx_hash: string | null
+          verified_at: string | null
+          wallet_address: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          dapp_id?: string | null
+          id?: string
+          task_date?: string
+          tx_hash?: string | null
+          verified_at?: string | null
+          wallet_address: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          dapp_id?: string | null
+          id?: string
+          task_date?: string
+          tx_hash?: string | null
+          verified_at?: string | null
+          wallet_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "daily_task_completions_dapp_id_fkey"
+            columns: ["dapp_id"]
+            isOneToOne: false
+            referencedRelation: "arc_dapps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       waitlist: {
         Row: {
           created_at: string
@@ -40,7 +186,12 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      waitlist_stats: {
+        Row: {
+          total_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
