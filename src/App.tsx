@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WagmiProvider } from "wagmi";
 import { Toaster as HotToaster } from "react-hot-toast";
-import { wagmiConfig } from "@/lib/wagmi";
+import { config as wagmiConfig } from "@/lib/wagmi";
 import { WalletProvider } from "@/contexts/WalletContext";
 import { AccessLevelProvider } from "@/contexts/AccessLevelContext";
 import Index from "./pages/Index";
