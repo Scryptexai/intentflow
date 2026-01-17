@@ -13,6 +13,43 @@ interface SiweAuthRequest {
   address: string;
 }
 
+// In-memory rate limiting (resets on function cold start, but provides basic protection)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10; // max 10 requests per minute per IP
+
+function checkRateLimit(clientIp: string): { allowed: boolean; retryAfter?: number } {
+  const now = Date.now();
+  const record = rateLimitMap.get(clientIp);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(clientIp, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return { allowed: true };
+  }
+
+  if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count++;
+  return { allowed: true };
+}
+
+function getClientIp(req: Request): string {
+  // Try various headers that might contain the real IP
+  const forwarded = req.headers.get('x-forwarded-for');
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  const realIp = req.headers.get('x-real-ip');
+  if (realIp) {
+    return realIp;
+  }
+  // Fallback to a generic identifier
+  return 'unknown';
+}
+
 function parseSiweMessage(message: string): { nonce: string; address: string; expirationTime?: string } | null {
   try {
     const lines = message.split('\n');
@@ -32,6 +69,13 @@ function parseSiweMessage(message: string): { nonce: string; address: string; ex
   }
 }
 
+// Generate a cryptographically secure random password
+function generateSecurePassword(): string {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -43,11 +87,39 @@ Deno.serve(async (req) => {
 
   try {
     if (path === 'siwe-auth' && req.method === 'POST') {
+      // Rate limiting check
+      const clientIp = getClientIp(req);
+      const rateCheck = checkRateLimit(clientIp);
+      
+      if (!rateCheck.allowed) {
+        console.warn(`Rate limit exceeded for IP: ${clientIp}`);
+        return new Response(
+          JSON.stringify({ error: 'Too many requests. Please try again later.' }),
+          { 
+            status: 429, 
+            headers: { 
+              ...corsHeaders, 
+              'Content-Type': 'application/json',
+              'Retry-After': String(rateCheck.retryAfter || 60)
+            } 
+          }
+        );
+      }
+
       const { message, signature, address } = await req.json() as SiweAuthRequest;
 
       if (!message || !signature || !address) {
         return new Response(
           JSON.stringify({ error: 'Missing required fields' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Validate Ethereum address format
+      const ethAddressRegex = /^0x[a-fA-F0-9]{40}$/;
+      if (!ethAddressRegex.test(address)) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid Ethereum address format' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -107,32 +179,77 @@ Deno.serve(async (req) => {
       );
 
       // Generate email from wallet address for Supabase auth
-      const email = `${address.toLowerCase()}@wallet.intent.app`;
-      const password = `wallet_${parsed.nonce}_${address.toLowerCase()}`;
+      const normalizedAddress = address.toLowerCase();
+      const email = `${normalizedAddress}@wallet.intent.app`;
 
-      // Try to sign in or create user
+      // Try to find existing user first
+      const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
+      const existingUser = existingUsers?.users?.find(u => u.email === email);
+
       let session;
-      const { data: signInData, error: signInError } = await supabaseAdmin.auth.signInWithPassword({
-        email,
-        password,
-      });
 
-      if (signInError) {
-        // User doesn't exist, create one
+      if (existingUser) {
+        // User exists - generate a new password and update
+        const newPassword = generateSecurePassword();
+        
+        // Update the user's password
+        const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+          existingUser.id,
+          { 
+            password: newPassword,
+            app_metadata: {
+              ...existingUser.app_metadata,
+              wallet_address: normalizedAddress,
+              provider: 'siwe'
+            }
+          }
+        );
+
+        if (updateError) {
+          console.error('Password update error:', updateError);
+          return new Response(
+            JSON.stringify({ error: 'Failed to authenticate user' }),
+            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        // Sign in with new password
+        const { data: signInData, error: signInError } = await supabaseAdmin.auth.signInWithPassword({
+          email,
+          password: newPassword,
+        });
+
+        if (signInError) {
+          console.error('Sign in error:', signInError);
+          return new Response(
+            JSON.stringify({ error: 'Failed to sign in' }),
+            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        session = signInData.session;
+      } else {
+        // Create new user with random password
+        const password = generateSecurePassword();
+        
         const { data: signUpData, error: signUpError } = await supabaseAdmin.auth.admin.createUser({
           email,
           password,
           email_confirm: true,
           user_metadata: {
-            wallet_address: address.toLowerCase(),
+            wallet_address: normalizedAddress,
             auth_method: 'siwe',
+          },
+          app_metadata: {
+            wallet_address: normalizedAddress,
+            provider: 'siwe',
           },
         });
 
         if (signUpError) {
           console.error('Sign up error:', signUpError);
           return new Response(
-            JSON.stringify({ error: 'Failed to create user', details: signUpError.message }),
+            JSON.stringify({ error: 'Failed to create user' }),
             { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
@@ -152,9 +269,9 @@ Deno.serve(async (req) => {
         }
 
         session = newSignIn.session;
-      } else {
-        session = signInData.session;
       }
+
+      console.log(`SIWE auth successful for wallet: ${normalizedAddress}`);
 
       return new Response(
         JSON.stringify({
@@ -167,7 +284,7 @@ Deno.serve(async (req) => {
           } : null,
           user: session?.user ? {
             id: session.user.id,
-            wallet_address: address.toLowerCase(),
+            wallet_address: normalizedAddress,
           } : null,
         }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -189,9 +306,9 @@ Deno.serve(async (req) => {
 
   } catch (error) {
     console.error('Auth service error:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    // Return generic error message without internal details
     return new Response(
-      JSON.stringify({ error: 'Internal server error', details: errorMessage }),
+      JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
