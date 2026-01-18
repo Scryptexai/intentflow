@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
-import { Activity, Shield, Sparkles, Link as LinkIcon } from "lucide-react";
+import { Activity, Shield, Sparkles, Link as LinkIcon, Rocket } from "lucide-react";
 import GridBackground from "@/components/GridBackground";
 import IntentLogo from "@/components/IntentLogo";
 import WaitlistForm from "@/components/WaitlistForm";
 import FeatureCard from "@/components/FeatureCard";
 import SocialLinks from "@/components/SocialLinks";
 import EcosystemDapps from "@/components/EcosystemDapps";
-import LaunchAppButton from "@/components/LaunchAppButton";
 
 const features = [
   {
@@ -38,10 +37,10 @@ const Index = () => {
       
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Header */}
-        <header className="w-full px-6 py-6">
+        <header className="w-full px-4 sm:px-6 py-4 sm:py-6">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <IntentLogo />
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -51,14 +50,21 @@ const Index = () => {
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 Built on Arc
               </motion.div>
-              <LaunchAppButton to="/dashboard" />
+              {/* Launch App button disabled */}
+              <motion.button
+                disabled
+                className="inline-flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-muted rounded-lg text-muted-foreground font-medium text-xs sm:text-sm cursor-not-allowed opacity-50"
+              >
+                <Rocket className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden xs:inline">Coming Soon</span>
+              </motion.button>
             </div>
           </div>
         </header>
         
         {/* Main content */}
-        <main className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-          <div className="max-w-4xl mx-auto text-center">
+        <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
+          <div className="max-w-4xl mx-auto text-center w-full">
             {/* Coming Soon badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -105,7 +111,7 @@ const Index = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground"
+              className="mt-8 sm:mt-12 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-8 text-xs sm:text-sm text-muted-foreground"
             >
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -123,7 +129,7 @@ const Index = () => {
           </div>
           
           {/* Features grid */}
-          <div className="w-full max-w-5xl mx-auto mt-20 px-4">
+          <div className="w-full max-w-5xl mx-auto mt-12 sm:mt-20 px-2 sm:px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -148,14 +154,14 @@ const Index = () => {
           </div>
 
           {/* Ecosystem dApps section */}
-          <div className="w-full max-w-6xl mx-auto mt-20">
+          <div className="w-full max-w-6xl mx-auto mt-12 sm:mt-20 px-2 sm:px-0">
             <EcosystemDapps />
           </div>
         </main>
         
         {/* Footer */}
-        <footer className="w-full px-6 py-8">
-          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+        <footer className="w-full px-4 sm:px-6 py-6 sm:py-8">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
