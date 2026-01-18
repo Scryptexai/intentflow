@@ -12,6 +12,7 @@ interface WaitlistEntry {
   twitter_followed: boolean;
   badge_minted: boolean;
   badge_image_url: string | null;
+  share_count: number;
 }
 
 const WaitlistForm = () => {
@@ -108,7 +109,8 @@ const WaitlistForm = () => {
         wallet_address: walletAddress,
         twitter_followed: hasFollowed,
         badge_minted: false,
-        badge_image_url: null
+        badge_image_url: null,
+        share_count: 0
       });
       toast.success("You're on the list! Mint your Early Access Badge below.");
       
@@ -249,6 +251,7 @@ const WaitlistForm = () => {
           isOnWaitlist={isOnWaitlist}
           badgeMinted={waitlistEntry?.badge_minted}
           badgeImageUrl={waitlistEntry?.badge_image_url || undefined}
+          shareCount={waitlistEntry?.share_count || 0}
           onBadgeMinted={handleBadgeMinted}
         />
       )}

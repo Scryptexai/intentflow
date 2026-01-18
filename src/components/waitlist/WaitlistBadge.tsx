@@ -10,6 +10,7 @@ interface WaitlistBadgeProps {
   isOnWaitlist: boolean;
   badgeMinted?: boolean;
   badgeImageUrl?: string;
+  shareCount?: number;
   onBadgeMinted?: () => void;
 }
 
@@ -18,12 +19,14 @@ const WaitlistBadge = ({
   isOnWaitlist, 
   badgeMinted = false,
   badgeImageUrl,
+  shareCount: initialShareCount = 0,
   onBadgeMinted 
 }: WaitlistBadgeProps) => {
   const [isMinting, setIsMinting] = useState(false);
   const [minted, setMinted] = useState(badgeMinted);
   const [showBadge, setShowBadge] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
+  const [shareCount, setShareCount] = useState(initialShareCount);
 
   const handleMintBadge = async () => {
     if (!walletAddress || !isOnWaitlist) return;
@@ -64,6 +67,19 @@ const WaitlistBadge = ({
 
   const handleShareToTwitter = async () => {
     setIsSharing(true);
+    
+    try {
+      // Track the share
+      const { data, error } = await supabase.functions.invoke('track-share', {
+        body: { walletAddress }
+      });
+      
+      if (data?.success) {
+        setShareCount(data.shareCount);
+      }
+    } catch (error) {
+      console.error('Error tracking share:', error);
+    }
     
     const truncatedWallet = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
     const shareMessage = `🎯 Just minted my Early Access Badge on @intent_sbs!
@@ -147,6 +163,14 @@ Get your badge: ${window.location.origin}
                     {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
                   </p>
                 </div>
+
+                {/* Share count display */}
+                {shareCount > 0 && (
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground text-xs mb-2">
+                    <Share2 className="w-3 h-3" />
+                    <span>Shared {shareCount} {shareCount === 1 ? 'time' : 'times'}</span>
+                  </div>
+                )}
 
                 {/* Action buttons */}
                 <div className="flex flex-col gap-2">

@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.check-waitlist]
 verify_jwt = false
+
+[functions.track-share]
+verify_jwt = false

@@ -168,6 +168,7 @@ export type Database = {
           created_at: string
           id: string
           ip_address: string | null
+          share_count: number
           twitter_followed: boolean
           wallet_address: string
         }
@@ -178,6 +179,7 @@ export type Database = {
           created_at?: string
           id?: string
           ip_address?: string | null
+          share_count?: number
           twitter_followed?: boolean
           wallet_address: string
         }
@@ -188,6 +190,7 @@ export type Database = {
           created_at?: string
           id?: string
           ip_address?: string | null
+          share_count?: number
           twitter_followed?: boolean
           wallet_address?: string
         }

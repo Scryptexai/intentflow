@@ -49,7 +49,8 @@ Deno.serve(async (req) => {
           wallet_address: waitlistEntry.wallet_address,
           twitter_followed: waitlistEntry.twitter_followed,
           badge_minted: waitlistEntry.badge_minted || false,
-          badge_image_url: waitlistEntry.badge_image_url || null
+          badge_image_url: waitlistEntry.badge_image_url || null,
+          share_count: waitlistEntry.share_count || 0
         }
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
