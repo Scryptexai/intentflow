@@ -4,7 +4,9 @@ import HeroSection from "@/components/landing/HeroSection";
 import ProblemSection from "@/components/landing/ProblemSection";
 import SolutionSection from "@/components/landing/SolutionSection";
 import ValuePropsSection from "@/components/landing/ValuePropsSection";
+import DemoSection from "@/components/landing/DemoSection";
 import ComparisonSection from "@/components/landing/ComparisonSection";
+import SocialProofSection from "@/components/landing/SocialProofSection";
 import TrustSection from "@/components/landing/TrustSection";
 import FAQSection from "@/components/landing/FAQSection";
 import CTASection from "@/components/landing/CTASection";
@@ -23,8 +25,10 @@ const Index = () => {
           <HeroSection />
           <ProblemSection />
           <SolutionSection />
+          <DemoSection />
           <ValuePropsSection />
           <ComparisonSection />
+          <SocialProofSection />
           <TrustSection />
           <FAQSection />
           <CTASection />
