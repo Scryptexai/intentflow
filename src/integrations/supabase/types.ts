@@ -162,6 +162,9 @@ export type Database = {
       }
       waitlist: {
         Row: {
+          badge_image_url: string | null
+          badge_minted: boolean | null
+          badge_minted_at: string | null
           created_at: string
           id: string
           ip_address: string | null
@@ -169,6 +172,9 @@ export type Database = {
           wallet_address: string
         }
         Insert: {
+          badge_image_url?: string | null
+          badge_minted?: boolean | null
+          badge_minted_at?: string | null
           created_at?: string
           id?: string
           ip_address?: string | null
@@ -176,6 +182,9 @@ export type Database = {
           wallet_address: string
         }
         Update: {
+          badge_image_url?: string | null
+          badge_minted?: boolean | null
+          badge_minted_at?: string | null
           created_at?: string
           id?: string
           ip_address?: string | null
