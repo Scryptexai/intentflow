@@ -11,17 +11,13 @@ const IntentLogo = () => {
     >
       {/* Logo image with clear background */}
       <motion.div
-        className="relative"
+        className="relative w-10 h-10 rounded-full overflow-hidden"
         whileHover={{ scale: 1.05 }}
       >
         <img
           src={intentLogo}
           alt="Intent Logo"
-          className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(0,212,255,0.4)]"
-          style={{ 
-            background: 'transparent',
-            mixBlendMode: 'normal'
-          }}
+          className="w-full h-full object-cover drop-shadow-[0_0_8px_rgba(0,212,255,0.4)]"
         />
       </motion.div>
       
