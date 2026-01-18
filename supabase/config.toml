@@ -1,11 +1,5 @@
 project_id = "werpexabemwdlcgfowea"
 
-[functions.generate-caption]
-verify_jwt = false
-
-[functions.generate-image]
-verify_jwt = false
-
 [functions.mint-badge]
 verify_jwt = false
 
