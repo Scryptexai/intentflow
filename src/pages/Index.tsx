@@ -32,13 +32,13 @@ const features = [
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen w-full overflow-hidden">
       <GridBackground />
       
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Header */}
-        <header className="w-full px-4 sm:px-6 py-4 sm:py-6">
-          <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <header className="w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
             <IntentLogo />
             <div className="flex items-center gap-2 sm:gap-4">
               <motion.div
@@ -50,21 +50,25 @@ const Index = () => {
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 Built on Arc
               </motion.div>
-              {/* Launch App button disabled */}
-              <motion.button
-                disabled
-                className="inline-flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-muted rounded-lg text-muted-foreground font-medium text-xs sm:text-sm cursor-not-allowed opacity-50"
+              {/* Launch App button */}
+              <motion.a
+                href="https://app.intent.sbs"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-primary text-primary-foreground rounded-lg font-medium text-xs sm:text-sm hover:bg-primary/90 transition-colors"
               >
                 <Rocket className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden xs:inline">Coming Soon</span>
-              </motion.button>
+                <span>Launch App</span>
+              </motion.a>
             </div>
           </div>
         </header>
         
         {/* Main content */}
-        <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
-          <div className="max-w-4xl mx-auto text-center w-full">
+        <main className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="max-w-5xl mx-auto text-center w-full">
             {/* Coming Soon badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -129,7 +133,7 @@ const Index = () => {
           </div>
           
           {/* Features grid */}
-          <div className="w-full max-w-5xl mx-auto mt-12 sm:mt-20 px-2 sm:px-4">
+          <div className="w-full max-w-7xl mx-auto mt-12 sm:mt-20 px-2 sm:px-4 lg:px-0">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -154,14 +158,14 @@ const Index = () => {
           </div>
 
           {/* Ecosystem dApps section */}
-          <div className="w-full max-w-6xl mx-auto mt-12 sm:mt-20 px-2 sm:px-0">
+          <div className="w-full max-w-7xl mx-auto mt-12 sm:mt-20 px-2 sm:px-0 lg:px-0">
             <EcosystemDapps />
           </div>
         </main>
         
         {/* Footer */}
-        <footer className="w-full px-4 sm:px-6 py-6 sm:py-8">
-          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+        <footer className="w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
