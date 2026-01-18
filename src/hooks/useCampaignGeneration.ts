@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import toast from 'react-hot-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface CampaignData {
   campaignType: string;
@@ -61,31 +62,73 @@ export function useCampaignGeneration() {
     setError(null);
 
     try {
-      // Simulated campaign generation
-      const caption = `🚀 Just completed my DeFi journey on Arc Network!\n\nActions: ${campaignData.actionOrder?.join(' → ') || 'Exploring'}\nTarget dApps: ${campaignData.targetDApps?.join(', ') || 'Arc Ecosystem'}\n\n#ArcNetwork #DeFi #Web3`;
-      
+      // Call the edge function to generate caption using Z.AI Anthropic API
+      const { data: captionData, error: captionError } = await supabase.functions.invoke('generate-caption', {
+        body: { campaignData, walletAddress }
+      });
+
+      if (captionError) {
+        throw new Error(captionError.message || 'Failed to generate caption');
+      }
+
+      if (!captionData?.success) {
+        throw new Error(captionData?.error || 'Caption generation failed');
+      }
+
+      const caption = captionData.caption;
+      const imagePrompt = captionData.imagePrompt;
       const captionHash = await hashCaption(caption);
       const campaignId = `campaign-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
+      // Set initial state with pending image
       setGeneratedCampaign({
         id: campaignId,
         caption,
         imageUrl: null,
-        imageStatus: 'completed',
+        imageStatus: 'generating',
         captionHash,
+        imagePrompt,
         generationMetadata: {
           campaignType: campaignData.campaignType,
           imageStyle: campaignData.imageStyle,
           targetDApps: campaignData.targetDApps || [],
           attempts: 1,
           generatedAt: new Date().toISOString(),
-          hasArcFlowMention: true,
+          hasArcFlowMention: caption.includes('@ArcFlowFinance'),
           actionOrder: campaignData.actionOrder,
           timeWindow: campaignData.timeWindow,
         }
       });
 
       toast.success('Caption generated!', { icon: '✍️' });
+
+      // Generate image using Pollinations API
+      try {
+        const { data: imageData, error: imageError } = await supabase.functions.invoke('generate-image', {
+          body: { prompt: imagePrompt, width: 1024, height: 1024 }
+        });
+
+        if (!imageError && imageData?.success) {
+          setGeneratedCampaign(prev => prev ? {
+            ...prev,
+            imageUrl: imageData.imageUrl,
+            imageStatus: 'completed'
+          } : null);
+          toast.success('Image generated!', { icon: '🎨' });
+        } else {
+          setGeneratedCampaign(prev => prev ? {
+            ...prev,
+            imageStatus: 'failed'
+          } : null);
+        }
+      } catch (imgErr) {
+        console.error('Image generation error:', imgErr);
+        setGeneratedCampaign(prev => prev ? {
+          ...prev,
+          imageStatus: 'failed'
+        } : null);
+      }
+
       return { success: true, campaignId };
 
     } catch (err) {
