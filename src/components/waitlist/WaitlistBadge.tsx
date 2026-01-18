@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Award, Loader2, Check, Sparkles, Download } from "lucide-react";
+import { Award, Loader2, Check, Sparkles, Download, Twitter, Share2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import earlyAccessBadge from "@/assets/early-access-badge.png";
@@ -23,6 +23,7 @@ const WaitlistBadge = ({
   const [isMinting, setIsMinting] = useState(false);
   const [minted, setMinted] = useState(badgeMinted);
   const [showBadge, setShowBadge] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
 
   const handleMintBadge = async () => {
     if (!walletAddress || !isOnWaitlist) return;
@@ -59,6 +60,29 @@ const WaitlistBadge = ({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleShareToTwitter = async () => {
+    setIsSharing(true);
+    
+    const truncatedWallet = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+    const shareMessage = `🎯 Just minted my Early Access Badge on @intent_sbs!
+
+Intent = Proof-of-Action Engine
+Onchain → Verified → Content → Minted Proof → Shared
+
+My wallet ${truncatedWallet} is now part of the future of onchain intent verification.
+
+Get your badge: ${window.location.origin}
+
+#Intent #ProofOfAction #Web3 #EarlyAccess`;
+
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}`;
+    
+    window.open(tweetUrl, '_blank', 'noopener,noreferrer,width=600,height=500');
+    
+    toast.success("Opening Twitter to share your badge!");
+    setIsSharing(false);
   };
 
   if (!isOnWaitlist) return null;
@@ -124,16 +148,37 @@ const WaitlistBadge = ({
                   </p>
                 </div>
 
-                {/* Download button */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleDownloadBadge}
-                  className="w-full py-3 rounded-lg bg-secondary border border-border text-foreground font-medium text-sm flex items-center justify-center gap-2 hover:bg-secondary/80 transition-colors"
-                >
-                  <Download className="w-4 h-4" />
-                  Download Badge
-                </motion.button>
+                {/* Action buttons */}
+                <div className="flex flex-col gap-2">
+                  {/* Share to Twitter button */}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleShareToTwitter}
+                    disabled={isSharing}
+                    className="w-full py-3 rounded-lg bg-[#1DA1F2] text-white font-medium text-sm flex items-center justify-center gap-2 hover:bg-[#1a8cd8] transition-colors disabled:opacity-50"
+                  >
+                    {isSharing ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <>
+                        <Twitter className="w-4 h-4" />
+                        Share on Twitter
+                      </>
+                    )}
+                  </motion.button>
+
+                  {/* Download button */}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleDownloadBadge}
+                    className="w-full py-3 rounded-lg bg-secondary border border-border text-foreground font-medium text-sm flex items-center justify-center gap-2 hover:bg-secondary/80 transition-colors"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download Badge
+                  </motion.button>
+                </div>
               </motion.div>
             ) : (
               <motion.div
