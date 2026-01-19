@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ChevronRight, Loader2 } from "lucide-react";
+import { ExternalLink, ChevronRight } from "lucide-react";
+
+// Import local logos
+import arcNetworkLogo from "@/assets/logos/chains/arc-network.jpg";
+import arcflowLogo from "@/assets/logos/arc/arcflow-finance.jpg";
+import curveLogo from "@/assets/logos/arc/curve.jpg";
+import mintauraLogo from "@/assets/logos/arc/mintaura.jpg";
+import infinityNameLogo from "@/assets/logos/arc/infinity-name.jpg";
+import watchoorLogo from "@/assets/logos/arc/watchoor.jpg";
+import synthraLogo from "@/assets/logos/arc/synthra.jpg";
+import superfaceLogo from "@/assets/logos/arc/superface.jpg";
+import paraLogo from "@/assets/logos/arc/para.jpg";
+import crossmintLogo from "@/assets/logos/arc/crossmint.jpg";
 
 interface DApp {
   name: string;
@@ -22,94 +34,24 @@ const chainsData: ChainData[] = [
   {
     name: "Arc Network",
     slug: "arc",
-    logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg",
+    logo: arcNetworkLogo,
     isLive: true,
     dapps: [
-      { name: "Aave", description: "Lending & Borrowing", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dc93490611b54729de1b_Logomark-dark.svg", url: "https://aave.com", category: "Lending" },
-      { name: "Curve", description: "Stablecoin DEX", logo: "https://pbs.twimg.com/profile_images/1890729178411106304/4ybLLiLo_400x400.jpg", url: "https://curve.fi", category: "DEX" },
-      { name: "Morpho", description: "Optimized lending", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dd4d5ab8afd5b17ea7e3_Morpho-with-background-logo.svg", url: "https://morpho.org", category: "Lending" },
-      { name: "LayerZero", description: "Omnichain protocol", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dfef2b1a23501670b341_LayerZero_emblem.svg", url: "https://layerzero.network", category: "Bridge" },
-      { name: "Fluid", description: "Liquidity protocol", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900e10b5adc0e69ee07601a_fluid-icon.svg", url: "https://fluid.instadapp.io", category: "DeFi" },
-      { name: "Across", description: "Cross-chain bridge", logo: "https://pbs.twimg.com/profile_images/1893011402783137792/5uUB1Asg_400x400.jpg", url: "https://across.to", category: "Bridge" },
-      { name: "Stargate", description: "LayerZero bridge", logo: "https://pbs.twimg.com/profile_images/1893011402783137792/5uUB1Asg_400x400.jpg", url: "https://stargate.finance", category: "Bridge" },
-      { name: "Chainlink", description: "Oracle network", logo: "https://pbs.twimg.com/profile_images/1917579466517921793/r0xBsFnG_400x400.jpg", url: "https://chain.link", category: "Oracle" },
-      { name: "Maple", description: "Institutional lending", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900d56d012d389e7faa891a_%24SYRUP.svg", url: "https://maple.finance", category: "Lending" },
-      { name: "Centrifuge", description: "RWA tokenization", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dddac70d84fd07dcf2b3_logomark-dark.svg", url: "https://centrifuge.io", category: "RWA" },
-      { name: "Axelar", description: "Cross-chain messaging", logo: "https://pbs.twimg.com/profile_images/1880298382269403136/XbAIqoSf_400x400.jpg", url: "https://axelar.network", category: "Bridge" },
-      { name: "Blockscout", description: "Block explorer", logo: "https://pbs.twimg.com/profile_images/1768698024057581569/nNWumXNE_400x400.jpg", url: "https://blockscout.com", category: "Explorer" },
-    ]
-  },
-  {
-    name: "Pharos Network",
-    slug: "pharos",
-    logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg",
-    isLive: false,
-    dapps: [
-      { name: "SyncSwap", description: "AMM DEX", logo: "https://pbs.twimg.com/profile_images/1907877149451337728/pn-bLDUO_400x400.jpg", url: "#", category: "DEX" },
-      { name: "Orbiter Finance", description: "Cross-rollup bridge", logo: "https://pbs.twimg.com/profile_images/1904524802906021890/mw9iy_E__400x400.jpg", url: "#", category: "Bridge" },
-      { name: "Ambient Finance", description: "Zero-gas DEX", logo: "https://pbs.twimg.com/profile_images/1705657050915975168/jXkqOg3k_400x400.jpg", url: "#", category: "DEX" },
-    ]
-  },
-  {
-    name: "Rise Chain",
-    slug: "rise",
-    logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg",
-    isLive: false,
-    dapps: [
-      { name: "Clober", description: "Orderbook DEX", logo: "https://pbs.twimg.com/profile_images/1695098553930219521/BKfKjTcL_400x400.jpg", url: "#", category: "DEX" },
-      { name: "Mitosis", description: "Liquidity protocol", logo: "https://pbs.twimg.com/profile_images/1825521931716612096/YH8sgCqD_400x400.jpg", url: "#", category: "Yield" },
-      { name: "Oku Trade", description: "Uniswap interface", logo: "https://pbs.twimg.com/profile_images/1620135006682451970/68rqNqhn_400x400.jpg", url: "#", category: "DEX" },
-    ]
-  },
-  {
-    name: "DataHaven",
-    slug: "datahaven",
-    logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg",
-    isLive: false,
-    dapps: [
-      { name: "Jumper", description: "Cross-chain aggregator", logo: "https://pbs.twimg.com/profile_images/1923047011365523456/bQZa_evq_400x400.jpg", url: "#", category: "Bridge" },
-      { name: "Socket", description: "Interoperability protocol", logo: "https://pbs.twimg.com/profile_images/1706272822272798720/l-qd-iV2_400x400.jpg", url: "#", category: "Infrastructure" },
-    ]
-  },
-  {
-    name: "Soneium",
-    slug: "soneium",
-    logo: "https://pbs.twimg.com/profile_images/1823245800091037696/Bmou0pSL_400x400.jpg",
-    isLive: false,
-    dapps: [
-      { name: "Velodrome", description: "Soneium native DEX", logo: "https://pbs.twimg.com/profile_images/1535006943443345410/VkkAYUZE_400x400.jpg", url: "#", category: "DEX" },
-      { name: "Kyo Finance", description: "Yield aggregator", logo: "https://pbs.twimg.com/profile_images/1849061648382394368/Zn-KnJF8_400x400.jpg", url: "#", category: "Yield" },
-      { name: "Beefy Finance", description: "Yield optimizer", logo: "https://pbs.twimg.com/profile_images/1740741588637966336/Cro4sW3V_400x400.jpg", url: "#", category: "Yield" },
-    ]
-  },
-  {
-    name: "Base",
-    slug: "base",
-    logo: "https://pbs.twimg.com/profile_images/1901719898810351616/G0qc3sEL_400x400.jpg",
-    isLive: false,
-    dapps: [
-      { name: "Aerodrome", description: "Leading DEX on Base", logo: "https://pbs.twimg.com/profile_images/1693059707063205888/gKLIuhhn_400x400.jpg", url: "https://aerodrome.finance", category: "DEX" },
-      { name: "Aave", description: "Lending & borrowing", logo: "https://pbs.twimg.com/profile_images/1925998024985546752/8l9LVVKX_400x400.jpg", url: "https://aave.com", category: "Lending" },
-      { name: "Uniswap", description: "Universal swap", logo: "https://pbs.twimg.com/profile_images/1817421054597394432/oV93l9qI_400x400.jpg", url: "https://app.uniswap.org", category: "DEX" },
-      { name: "Compound", description: "DeFi lending protocol", logo: "https://pbs.twimg.com/profile_images/1669398090228903937/jIaKKBwj_400x400.jpg", url: "https://compound.finance", category: "Lending" },
+      { name: "ArcFlow Finance", description: "Native DEX & liquidity hub", logo: arcflowLogo, url: "https://arcflow.finance", category: "DEX" },
+      { name: "Curve", description: "Stablecoin DEX", logo: curveLogo, url: "https://curve.fi", category: "DEX" },
+      { name: "MintAura", description: "NFT marketplace", logo: mintauraLogo, url: "https://mintaura.io", category: "NFT" },
+      { name: "Infinity Name", description: "Web3 domain service", logo: infinityNameLogo, url: "https://infinityname.io", category: "Identity" },
+      { name: "Watchoor", description: "Portfolio tracker", logo: watchoorLogo, url: "https://watchoor.com", category: "Tools" },
+      { name: "Synthra", description: "Synthetic assets", logo: synthraLogo, url: "https://synthra.io", category: "DeFi" },
+      { name: "Superface", description: "Social platform", logo: superfaceLogo, url: "https://superface.xyz", category: "Social" },
+      { name: "Para", description: "Wallet infrastructure", logo: paraLogo, url: "https://para.io", category: "Wallet" },
+      { name: "Crossmint", description: "NFT checkout", logo: crossmintLogo, url: "https://crossmint.com", category: "NFT" },
     ]
   },
 ];
 
 const DAppsShowcase = () => {
   const [activeChainIndex, setActiveChainIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  // Auto-rotate chains
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    
-    const interval = setInterval(() => {
-      setActiveChainIndex((prev) => (prev + 1) % chainsData.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying]);
 
   const activeChain = chainsData[activeChainIndex];
 
@@ -126,20 +68,17 @@ const DAppsShowcase = () => {
             Supported dApps
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Generate proof-of-activity from 50+ dApps across multiple chains
+            Generate proof-of-activity from verified dApps on Arc Network
           </p>
         </motion.div>
 
-        {/* Chain Selector - Carousel Style */}
+        {/* Chain Selector */}
         <div className="relative mb-8">
           <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
             {chainsData.map((chain, index) => (
               <motion.button
                 key={chain.slug}
-                onClick={() => {
-                  setActiveChainIndex(index);
-                  setIsAutoPlaying(false);
-                }}
+                onClick={() => setActiveChainIndex(index)}
                 className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all flex-shrink-0 ${
                   activeChainIndex === index
                     ? "bg-primary/10 border-primary/50"
@@ -154,9 +93,6 @@ const DAppsShowcase = () => {
                   src={chain.logo}
                   alt={chain.name}
                   className="w-6 h-6 rounded-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${chain.name}&background=1e293b&color=fff`;
-                  }}
                 />
                 <span className={`text-sm font-medium ${
                   activeChainIndex === index ? "text-foreground" : "text-muted-foreground"
@@ -166,24 +102,7 @@ const DAppsShowcase = () => {
                 {chain.isLive && (
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                 )}
-                {!chain.isLive && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
-                    Soon
-                  </span>
-                )}
               </motion.button>
-            ))}
-          </div>
-
-          {/* Progress indicator */}
-          <div className="flex justify-center gap-1 mt-4">
-            {chainsData.map((_, index) => (
-              <div
-                key={index}
-                className={`h-1 rounded-full transition-all duration-300 ${
-                  activeChainIndex === index ? "w-6 bg-primary" : "w-2 bg-border"
-                }`}
-              />
             ))}
           </div>
         </div>
@@ -203,15 +122,9 @@ const DAppsShowcase = () => {
           <div>
             <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
               {activeChain.name}
-              {activeChain.isLive ? (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">
-                  Live
-                </span>
-              ) : (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-                  Coming Soon
-                </span>
-              )}
+              <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">
+                Live
+              </span>
             </h3>
             <p className="text-sm text-muted-foreground">{activeChain.dapps.length} dApps available</p>
           </div>
@@ -225,39 +138,30 @@ const DAppsShowcase = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 ${
-              !activeChain.isLive ? "opacity-60" : ""
-            }`}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
           >
             {activeChain.dapps.map((dapp, index) => (
               <motion.a
                 key={dapp.name}
-                href={activeChain.isLive ? dapp.url : undefined}
+                href={dapp.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                whileHover={activeChain.isLive ? { y: -4, scale: 1.02 } : {}}
-                className={`p-4 rounded-xl bg-card/80 border border-border transition-all group ${
-                  activeChain.isLive ? "hover:border-primary/30 cursor-pointer" : "cursor-default"
-                }`}
+                whileHover={{ y: -4, scale: 1.02 }}
+                className="p-4 rounded-xl bg-card/80 border border-border transition-all group hover:border-primary/30 cursor-pointer"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <img
                     src={dapp.logo}
                     alt={dapp.name}
                     className="w-10 h-10 rounded-lg object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = `https://ui-avatars.com/api/?name=${dapp.name.substring(0, 2)}&background=1e293b&color=fff`;
-                    }}
                   />
                 </div>
                 <h3 className="font-semibold text-foreground text-sm mb-1 group-hover:text-primary transition-colors flex items-center gap-1">
                   {dapp.name}
-                  {activeChain.isLive && (
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  )}
+                  <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
                 <p className="text-xs text-muted-foreground line-clamp-1">{dapp.description}</p>
                 <div className="mt-2">
@@ -290,7 +194,7 @@ const DAppsShowcase = () => {
           viewport={{ once: true }}
           className="text-center text-sm text-muted-foreground mt-8"
         >
-          More dApps added weekly • Request integration on Discord
+          More chains & dApps added weekly • Request integration on Discord
         </motion.p>
       </div>
     </section>
