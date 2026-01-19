@@ -5,8 +5,8 @@ const chains = [
   { name: "Arc Network", logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg", isLive: true },
   { name: "Pharos", logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg", isLive: false },
   { name: "Rise Chain", logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg", isLive: false },
-  { name: "DataHaven", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", isLive: false },
-  { name: "Soneium", logo: "https://onchaingm.com/chains/soneium.jpeg", isLive: false },
+  { name: "Base", logo: "https://pbs.twimg.com/profile_images/1901719898810351616/G0qc3sEL_400x400.jpg", isLive: false },
+  { name: "Soneium", logo: "https://pbs.twimg.com/profile_images/1823245800091037696/Bmou0pSL_400x400.jpg", isLive: false },
 ];
 
 const HeroSection = () => {

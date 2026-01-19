@@ -50,8 +50,8 @@ const chainsData: ChainData[] = [
     isLive: false,
     dapps: [
       { name: "RiseSwap", description: "Native swap", logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg", url: "#", category: "DEX" },
-      { name: "RiseLend", description: "Lending platform", logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg", url: "#", category: "Lending" },
-      { name: "Elevate", description: "Yield optimizer", logo: "https://pbs.twimg.com/profile_images/1899464508667994112/65iSQgqm_400x400.jpg", url: "#", category: "Yield" },
+      { name: "Clober", description: "Orderbook DEX", logo: "https://pbs.twimg.com/profile_images/1695098553930219521/BKfKjTcL_400x400.jpg", url: "#", category: "DEX" },
+      { name: "Mitosis", description: "Liquidity protocol", logo: "https://pbs.twimg.com/profile_images/1825521931716612096/YH8sgCqD_400x400.jpg", url: "#", category: "Yield" },
     ]
   },
   {
@@ -60,30 +60,31 @@ const chainsData: ChainData[] = [
     logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg",
     isLive: false,
     dapps: [
-      { name: "HavenSwap", description: "Data-first DEX", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", url: "#", category: "DEX" },
+      { name: "HavenDEX", description: "Data-first DEX", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", url: "#", category: "DEX" },
       { name: "DataVault", description: "Secure storage", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", url: "#", category: "Storage" },
     ]
   },
   {
     name: "Soneium",
     slug: "soneium",
-    logo: "https://onchaingm.com/chains/soneium.jpeg",
+    logo: "https://pbs.twimg.com/profile_images/1823245800091037696/Bmou0pSL_400x400.jpg",
     isLive: false,
     dapps: [
       { name: "SoneSwap", description: "Soneium native DEX", logo: "https://pbs.twimg.com/profile_images/1844717868888162305/t3rJVKHH_400x400.jpg", url: "#", category: "DEX" },
       { name: "Kyo Finance", description: "Yield aggregator", logo: "https://pbs.twimg.com/profile_images/1849061648382394368/Zn-KnJF8_400x400.jpg", url: "#", category: "Yield" },
-      { name: "SoneBridge", description: "Cross-chain bridge", logo: "https://onchaingm.com/chains/soneium.jpeg", url: "#", category: "Bridge" },
+      { name: "SoneBridge", description: "Cross-chain bridge", logo: "https://pbs.twimg.com/profile_images/1823245800091037696/Bmou0pSL_400x400.jpg", url: "#", category: "Bridge" },
     ]
   },
   {
     name: "Base",
     slug: "base",
-    logo: "https://onchaingm.com/chains/base.jpg",
+    logo: "https://pbs.twimg.com/profile_images/1901719898810351616/G0qc3sEL_400x400.jpg",
     isLive: false,
     dapps: [
       { name: "Aerodrome", description: "Leading DEX on Base", logo: "https://pbs.twimg.com/profile_images/1693059707063205888/gKLIuhhn_400x400.jpg", url: "https://aerodrome.finance", category: "DEX" },
-      { name: "Aave", description: "Lending & borrowing", logo: "https://pbs.twimg.com/profile_images/1746279085578027008/kW0bNQmm_400x400.jpg", url: "https://aave.com", category: "Lending" },
-      { name: "Uniswap", description: "Universal swap", logo: "https://pbs.twimg.com/profile_images/1242184851152928769/wG2eTAfD_400x400.jpg", url: "https://app.uniswap.org", category: "DEX" },
+      { name: "Aave", description: "Lending & borrowing", logo: "https://pbs.twimg.com/profile_images/1925998024985546752/8l9LVVKX_400x400.jpg", url: "https://aave.com", category: "Lending" },
+      { name: "Uniswap", description: "Universal swap", logo: "https://pbs.twimg.com/profile_images/1817421054597394432/oV93l9qI_400x400.jpg", url: "https://app.uniswap.org", category: "DEX" },
+      { name: "Compound", description: "DeFi lending protocol", logo: "https://pbs.twimg.com/profile_images/1669398090228903937/jIaKKBwj_400x400.jpg", url: "https://compound.finance", category: "Lending" },
     ]
   },
 ];

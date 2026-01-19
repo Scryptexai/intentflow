@@ -12,14 +12,14 @@ interface Chain {
 
 const chains: Chain[] = [
   { name: "Arc Network", logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg", tvl: "$12M", txns: "2.5M+", users: "180K", isLive: true },
-  { name: "Base", logo: "https://onchaingm.com/chains/base.jpg", tvl: "$8.2B", txns: "12M+", users: "2.1M", isLive: false },
-  { name: "Soneium", logo: "https://onchaingm.com/chains/soneium.jpeg", tvl: "$420M", txns: "3.2M+", users: "890K", isLive: false },
+  { name: "Base", logo: "https://pbs.twimg.com/profile_images/1901719898810351616/G0qc3sEL_400x400.jpg", tvl: "$8.2B", txns: "12M+", users: "2.1M", isLive: false },
+  { name: "Soneium", logo: "https://pbs.twimg.com/profile_images/1823245800091037696/Bmou0pSL_400x400.jpg", tvl: "$420M", txns: "3.2M+", users: "890K", isLive: false },
   { name: "Pharos Network", logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg", tvl: "$85M", txns: "1.2M+", users: "210K", isLive: false },
   { name: "Rise Chain", logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg", tvl: "$45M", txns: "890K+", users: "120K", isLive: false },
   { name: "DataHaven", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", tvl: "$28M", txns: "450K+", users: "65K", isLive: false },
-  { name: "UniChain", logo: "https://onchaingm.com/chains/unichain.jpg", tvl: "$1.8B", txns: "8.5M+", users: "1.2M", isLive: false },
-  { name: "Linea", logo: "https://onchaingm.com/chains/linea.png", tvl: "$1.2B", txns: "15M+", users: "3.5M", isLive: false },
-  { name: "Optimism", logo: "https://onchaingm.com/chains/optimism.svg", tvl: "$5.6B", txns: "120M+", users: "4.2M", isLive: false },
+  { name: "UniChain", logo: "https://pbs.twimg.com/profile_images/1792994067560685568/nfW2nQDx_400x400.jpg", tvl: "$1.8B", txns: "8.5M+", users: "1.2M", isLive: false },
+  { name: "Linea", logo: "https://pbs.twimg.com/profile_images/1908893950612029440/8NZTFyFo_400x400.jpg", tvl: "$1.2B", txns: "15M+", users: "3.5M", isLive: false },
+  { name: "Optimism", logo: "https://pbs.twimg.com/profile_images/1734408869498621952/QMf6Xvzk_400x400.jpg", tvl: "$5.6B", txns: "120M+", users: "4.2M", isLive: false },
 ];
 
 const ChainCarousel = () => {
