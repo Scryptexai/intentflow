@@ -1,161 +1,110 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Rocket, Play } from "lucide-react";
+import { motion } from "framer-motion";
+import { Rocket, Zap } from "lucide-react";
+
+const chains = [
+  { name: "Base", logo: "https://onchaingm.com/chains/base.jpg" },
+  { name: "Soneium", logo: "https://onchaingm.com/chains/soneium.jpeg" },
+  { name: "UniChain", logo: "https://onchaingm.com/chains/unichain.jpg" },
+  { name: "Optimism", logo: "https://onchaingm.com/chains/optimism.svg" },
+  { name: "Linea", logo: "https://onchaingm.com/chains/linea.png" },
+];
 
 const HeroSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
-
   return (
-    <section 
-      ref={sectionRef}
-      className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 overflow-hidden"
-    >
-      <motion.div 
-        style={{ y, opacity, scale }}
-        className="max-w-5xl mx-auto text-center w-full"
-      >
+    <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-5xl mx-auto text-center w-full">
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-          </span>
-          Proof of Structured Participation
+          <Zap className="w-4 h-4" />
+          Multi-Chain On-Chain Proof System
         </motion.div>
         
         {/* Main Headline */}
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-5"
         >
-          <span className="text-foreground">Turn Your On-Chain Actions</span>
+          <span className="text-foreground">Stop Yapping.</span>
           <br />
-          <motion.span 
-            className="text-gradient inline-block"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Into Unique Campaigns
-          </motion.span>
+          <span className="text-gradient">Start Proving.</span>
         </motion.h1>
         
         {/* Subheadline */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
         >
-          {["Verify", "Generate", "Share", "Prove"].map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
-              className="inline-block"
-            >
-              <span className="text-foreground font-medium">{word}</span>
-              {i < 3 && <span className="mx-2 text-primary">•</span>}
-            </motion.span>
-          ))}
+          Generate AI-powered campaign content from your real on-chain activity. 
+          <span className="text-foreground font-medium"> For yappers, builders, and degens</span> across every chain.
         </motion.p>
         
         {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.8 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
         >
           <motion.a
             href="https://app.intent.sbs"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 40px hsl(199 89% 48% / 0.4)" }}
+            whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold text-lg glow-primary hover:bg-primary/90 transition-all"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold text-lg hover:bg-primary/90 transition-all"
           >
             <Rocket className="w-5 h-5" />
-            <span>Launch App</span>
+            Launch App
           </motion.a>
           
-          <motion.button
-            whileHover={{ scale: 1.05 }}
+          <motion.a
+            href="#how-it-works"
+            whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-2 px-8 py-4 bg-secondary/50 text-foreground rounded-xl font-medium text-lg border border-border hover:bg-secondary/70 transition-all"
           >
-            <Play className="w-5 h-5" />
-            <span>Watch Demo (1:30)</span>
-          </motion.button>
+            See How It Works
+          </motion.a>
         </motion.div>
         
-        {/* Trust Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-card/50 border border-border text-sm text-muted-foreground"
-        >
-          <div className="w-2 h-2 rounded-full bg-usdc animate-pulse" />
-          <span className="font-mono">🔒 Official Arc Network Ecosystem Partner</span>
-        </motion.div>
-        
-        {/* Chain Info */}
+        {/* Supported Chains */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
-          className="mt-6 flex items-center justify-center gap-6 text-xs text-muted-foreground font-mono"
+          transition={{ delay: 0.4 }}
+          className="flex flex-col items-center gap-4"
         >
-          <span className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-            Built on Arc Testnet
-          </span>
-          <span className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-intent-blue" />
-            Chain ID: 5042002
-          </span>
+          <span className="text-xs text-muted-foreground uppercase tracking-wider">Supported Chains</span>
+          <div className="flex items-center gap-3 flex-wrap justify-center">
+            {chains.map((chain, i) => (
+              <motion.div
+                key={chain.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 + i * 0.05 }}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-card/50 border border-border text-sm"
+              >
+                <img 
+                  src={chain.logo} 
+                  alt={chain.name} 
+                  className="w-5 h-5 rounded-full object-cover"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+                <span className="text-muted-foreground">{chain.name}</span>
+              </motion.div>
+            ))}
+            <span className="text-muted-foreground text-sm">+20 more</span>
+          </div>
         </motion.div>
-      </motion.div>
-
-      {/* Floating particles effect */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-primary/20"
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: 3 + i * 0.5,
-              repeat: Infinity,
-              delay: i * 0.3,
-            }}
-          />
-        ))}
       </div>
     </section>
   );
