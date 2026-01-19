@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
@@ -34,47 +35,95 @@ const faqs = [
 ];
 
 const FAQSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [60, -40]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
   return (
-    <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative">
-      {/* Background accent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+    <section ref={sectionRef} className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Parallax background accent */}
+      <motion.div 
+        style={{ y: backgroundY }}
+        className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" 
+      />
       
       <div className="max-w-3xl mx-auto relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          style={{ y }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
+          >
             Frequently Asked Questions
-          </h2>
-          <p className="text-muted-foreground text-lg">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-muted-foreground text-lg"
+          >
             Everything you need to know about INTENT
-          </p>
+          </motion.p>
         </motion.div>
         
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.1 }
+            }
+          }}
         >
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
-              <AccordionItem
+              <motion.div
                 key={index}
-                value={`item-${index}`}
-                className="bg-card/50 border border-border rounded-xl px-6 data-[state=open]:border-primary/30"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                      duration: 0.5,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }
+                  }
+                }}
               >
-                <AccordionTrigger className="text-left text-foreground hover:text-primary py-5">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+                <AccordionItem
+                  value={`item-${index}`}
+                  className="bg-card/50 border border-border rounded-xl px-6 data-[state=open]:border-primary/30 hover:border-primary/20 transition-colors"
+                >
+                  <AccordionTrigger className="text-left text-foreground hover:text-primary py-5 transition-colors">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5">
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {faq.answer}
+                    </motion.div>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </motion.div>
