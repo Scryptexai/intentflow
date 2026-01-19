@@ -12,7 +12,7 @@ const chains = [
 
 const HeroSection = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-20 lg:py-28 min-h-[85vh]">
+    <section className="relative flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
       {/* Animated Background - Verification Flow */}
       <HeroBackground />
       
@@ -56,7 +56,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <motion.a
             href="https://app.intent.sbs"
@@ -80,44 +80,6 @@ const HeroSection = () => {
           </motion.a>
         </motion.div>
         
-        {/* Supported Chains */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="flex flex-col items-center gap-4"
-        >
-          <span className="text-xs text-muted-foreground uppercase tracking-wider">Supported Chains</span>
-          <div className="flex items-center gap-3 flex-wrap justify-center">
-            {chains.map((chain, i) => (
-              <motion.div
-                key={chain.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + i * 0.05 }}
-                className={`relative flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm ${
-                  chain.isLive 
-                    ? "bg-primary/10 border-primary/30" 
-                    : "bg-card/50 border-border opacity-60"
-                }`}
-              >
-                <img 
-                  src={chain.logo} 
-                  alt={chain.name} 
-                  className="w-5 h-5 rounded-full object-cover"
-                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                />
-                <span className={chain.isLive ? "text-foreground" : "text-muted-foreground"}>
-                  {chain.name}
-                </span>
-                {chain.isLive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                )}
-              </motion.div>
-            ))}
-            <span className="text-muted-foreground text-sm">+more soon</span>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
