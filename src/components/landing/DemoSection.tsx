@@ -1,14 +1,12 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Play, ArrowRight, Volume2, VolumeX } from "lucide-react";
-import demoVideo1 from "@/assets/demo-video-1.mp4";
+import { ArrowRight, Volume2, VolumeX } from "lucide-react";
 import demoVideo2 from "@/assets/demo-video-2.mp4";
 
 const DemoSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const video1Ref = useRef<HTMLVideoElement>(null);
-  const video2Ref = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -17,7 +15,7 @@ const DemoSection = () => {
 
   const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
-  const toggleMute = (videoRef: React.RefObject<HTMLVideoElement>) => {
+  const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
@@ -26,7 +24,7 @@ const DemoSection = () => {
 
   return (
     <section ref={sectionRef} id="how-it-works" className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto relative">
+      <div className="max-w-5xl mx-auto relative">
         <motion.div
           style={{ y }}
           className="text-center mb-12"
@@ -38,7 +36,7 @@ const DemoSection = () => {
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
           >
-            See INTENT In Action
+            INTENT Action Flow
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -51,66 +49,34 @@ const DemoSection = () => {
           </motion.p>
         </motion.div>
         
-        {/* Video Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Demo Video 1 */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative group"
-          >
-            <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-50" />
-            <div className="relative rounded-xl overflow-hidden border border-primary/20 bg-card/50">
-              <video
-                ref={video1Ref}
-                src={demoVideo1}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-auto"
-              />
-              <button
-                onClick={() => toggleMute(video1Ref)}
-                className="absolute bottom-4 right-4 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-background transition-all"
-              >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-              </button>
-            </div>
-            <p className="text-center text-sm text-muted-foreground mt-3">Create verified campaigns in seconds</p>
-          </motion.div>
-
-          {/* Demo Video 2 */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative group"
-          >
-            <div className="absolute -inset-2 bg-gradient-to-r from-accent/20 to-primary/20 rounded-2xl blur-xl opacity-50" />
-            <div className="relative rounded-xl overflow-hidden border border-primary/20 bg-card/50">
-              <video
-                ref={video2Ref}
-                src={demoVideo2}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-auto"
-              />
-              <button
-                onClick={() => toggleMute(video2Ref)}
-                className="absolute bottom-4 right-4 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-background transition-all"
-              >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-              </button>
-            </div>
-            <p className="text-center text-sm text-muted-foreground mt-3">Share proof-of-activity instantly</p>
-          </motion.div>
-        </div>
+        {/* Single Video */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative max-w-3xl mx-auto"
+        >
+          <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-primary/20 rounded-2xl blur-xl opacity-50" />
+          <div className="relative rounded-xl overflow-hidden border border-primary/20 bg-card/50 shadow-2xl">
+            <video
+              ref={videoRef}
+              src={demoVideo2}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-auto"
+            />
+            <button
+              onClick={toggleMute}
+              className="absolute bottom-4 right-4 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-background transition-all"
+            >
+              {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            </button>
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-4">Share proof-of-activity instantly on social media</p>
+        </motion.div>
         
         {/* Feature highlights below demo */}
         <motion.div

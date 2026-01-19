@@ -25,11 +25,11 @@ const chainsData: ChainData[] = [
     logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg",
     isLive: true,
     dapps: [
-      { name: "ArcSwap", description: "Native DEX for Arc Network", logo: "https://pbs.twimg.com/profile_images/1855605285983772672/BFzlMJmX_400x400.jpg", url: "https://arcswap.io", category: "DEX" },
-      { name: "ArcLend", description: "Lending & Borrowing", logo: "https://pbs.twimg.com/profile_images/1882777007765639168/RTMKW0gd_400x400.jpg", url: "#", category: "Lending" },
-      { name: "ArcBridge", description: "Cross-chain bridge", logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg", url: "#", category: "Bridge" },
-      { name: "Arcanum", description: "NFT Marketplace", logo: "https://pbs.twimg.com/profile_images/1894424497569112064/8uixjNkJ_400x400.jpg", url: "#", category: "NFT" },
-      { name: "ArcStake", description: "Liquid staking", logo: "https://pbs.twimg.com/profile_images/1870124135362134016/XRWxp0xo_400x400.jpg", url: "#", category: "Staking" },
+      { name: "Lynex", description: "Native DEX on Arc", logo: "https://pbs.twimg.com/profile_images/1738269022744567808/dXM0xFP7_400x400.jpg", url: "https://lynex.fi", category: "DEX" },
+      { name: "Mendi Finance", description: "Lending & Borrowing", logo: "https://pbs.twimg.com/profile_images/1643660081528766464/aWS2vk_k_400x400.jpg", url: "https://mendi.finance", category: "Lending" },
+      { name: "Stargate", description: "Cross-chain bridge", logo: "https://pbs.twimg.com/profile_images/1893011402783137792/5uUB1Asg_400x400.jpg", url: "https://stargate.finance", category: "Bridge" },
+      { name: "Velocore", description: "DEX with ve(3,3)", logo: "https://pbs.twimg.com/profile_images/1609158664046587906/AJzQ3gJx_400x400.jpg", url: "https://velocore.xyz", category: "DEX" },
+      { name: "LayerZero", description: "Omnichain interoperability", logo: "https://pbs.twimg.com/profile_images/1905953498363576320/rbrJn-lj_400x400.jpg", url: "https://layerzero.network", category: "Infrastructure" },
     ]
   },
   {
@@ -38,9 +38,9 @@ const chainsData: ChainData[] = [
     logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg",
     isLive: false,
     dapps: [
-      { name: "PharosSwap", description: "AMM DEX", logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg", url: "#", category: "DEX" },
-      { name: "PharosBridge", description: "Official bridge", logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg", url: "#", category: "Bridge" },
-      { name: "LightFi", description: "Lending protocol", logo: "https://pbs.twimg.com/profile_images/1902029469072195584/G_uqd_X2_400x400.jpg", url: "#", category: "Lending" },
+      { name: "SyncSwap", description: "AMM DEX", logo: "https://pbs.twimg.com/profile_images/1907877149451337728/pn-bLDUO_400x400.jpg", url: "#", category: "DEX" },
+      { name: "Orbiter Finance", description: "Cross-rollup bridge", logo: "https://pbs.twimg.com/profile_images/1904524802906021890/mw9iy_E__400x400.jpg", url: "#", category: "Bridge" },
+      { name: "Ambient Finance", description: "Zero-gas DEX", logo: "https://pbs.twimg.com/profile_images/1705657050915975168/jXkqOg3k_400x400.jpg", url: "#", category: "DEX" },
     ]
   },
   {
@@ -49,9 +49,9 @@ const chainsData: ChainData[] = [
     logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg",
     isLive: false,
     dapps: [
-      { name: "RiseSwap", description: "Native swap", logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg", url: "#", category: "DEX" },
       { name: "Clober", description: "Orderbook DEX", logo: "https://pbs.twimg.com/profile_images/1695098553930219521/BKfKjTcL_400x400.jpg", url: "#", category: "DEX" },
       { name: "Mitosis", description: "Liquidity protocol", logo: "https://pbs.twimg.com/profile_images/1825521931716612096/YH8sgCqD_400x400.jpg", url: "#", category: "Yield" },
+      { name: "Oku Trade", description: "Uniswap interface", logo: "https://pbs.twimg.com/profile_images/1620135006682451970/68rqNqhn_400x400.jpg", url: "#", category: "DEX" },
     ]
   },
   {
@@ -60,8 +60,8 @@ const chainsData: ChainData[] = [
     logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg",
     isLive: false,
     dapps: [
-      { name: "HavenDEX", description: "Data-first DEX", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", url: "#", category: "DEX" },
-      { name: "DataVault", description: "Secure storage", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", url: "#", category: "Storage" },
+      { name: "Jumper", description: "Cross-chain aggregator", logo: "https://pbs.twimg.com/profile_images/1923047011365523456/bQZa_evq_400x400.jpg", url: "#", category: "Bridge" },
+      { name: "Socket", description: "Interoperability protocol", logo: "https://pbs.twimg.com/profile_images/1706272822272798720/l-qd-iV2_400x400.jpg", url: "#", category: "Infrastructure" },
     ]
   },
   {
@@ -70,9 +70,9 @@ const chainsData: ChainData[] = [
     logo: "https://pbs.twimg.com/profile_images/1823245800091037696/Bmou0pSL_400x400.jpg",
     isLive: false,
     dapps: [
-      { name: "SoneSwap", description: "Soneium native DEX", logo: "https://pbs.twimg.com/profile_images/1844717868888162305/t3rJVKHH_400x400.jpg", url: "#", category: "DEX" },
+      { name: "Velodrome", description: "Soneium native DEX", logo: "https://pbs.twimg.com/profile_images/1535006943443345410/VkkAYUZE_400x400.jpg", url: "#", category: "DEX" },
       { name: "Kyo Finance", description: "Yield aggregator", logo: "https://pbs.twimg.com/profile_images/1849061648382394368/Zn-KnJF8_400x400.jpg", url: "#", category: "Yield" },
-      { name: "SoneBridge", description: "Cross-chain bridge", logo: "https://pbs.twimg.com/profile_images/1823245800091037696/Bmou0pSL_400x400.jpg", url: "#", category: "Bridge" },
+      { name: "Beefy Finance", description: "Yield optimizer", logo: "https://pbs.twimg.com/profile_images/1740741588637966336/Cro4sW3V_400x400.jpg", url: "#", category: "Yield" },
     ]
   },
   {
