@@ -1,10 +1,14 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Play, ArrowRight } from "lucide-react";
-import appPreview from "@/assets/app-preview.png";
+import { Play, ArrowRight, Volume2, VolumeX } from "lucide-react";
+import demoVideo1 from "@/assets/demo-video-1.mp4";
+import demoVideo2 from "@/assets/demo-video-2.mp4";
 
 const DemoSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -12,18 +16,16 @@ const DemoSection = () => {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const imageY = useTransform(scrollYProgress, [0, 1], [30, -30]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.98]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [-2, 2]);
+
+  const toggleMute = (videoRef: React.RefObject<HTMLVideoElement>) => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
 
   return (
-    <section ref={sectionRef} className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Parallax background accent */}
-      <motion.div 
-        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "20%"]) }}
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-intent-blue/5 to-transparent pointer-events-none" 
-      />
-      
+    <section ref={sectionRef} id="how-it-works" className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-6xl mx-auto relative">
         <motion.div
           style={{ y }}
@@ -45,65 +47,70 @@ const DemoSection = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-muted-foreground text-lg max-w-2xl mx-auto"
           >
-            Watch how easy it is to create verified campaigns in under 2 minutes
+            Watch the full flow: tx → verify → generate → share
           </motion.p>
         </motion.div>
         
-        {/* Video/App Preview Container with 3D effect */}
-        <motion.div
-          style={{ y: imageY, scale, rotateX: rotate }}
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="relative group perspective-1000"
-        >
-          {/* Animated glow effect */}
-          <motion.div 
-            className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-intent-blue/20 to-accent/20 rounded-3xl blur-2xl"
-            animate={{ 
-              opacity: [0.3, 0.6, 0.3],
-              scale: [1, 1.02, 1]
-            }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
-          
-          {/* App Preview */}
-          <motion.div 
-            className="relative rounded-2xl overflow-hidden border border-primary/20 bg-card/50"
-            whileHover={{ scale: 1.02, rotateY: 2 }}
-            transition={{ duration: 0.4 }}
+        {/* Video Grid */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Demo Video 1 */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative group"
           >
-            <img 
-              src={appPreview} 
-              alt="INTENT App Preview - Create campaigns from on-chain actions" 
-              className="w-full h-auto"
-            />
-            
-            {/* Play button overlay */}
-            <motion.div 
-              className="absolute inset-0 flex items-center justify-center bg-background/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-            >
-              <motion.div
-                whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.95 }}
-                animate={{ 
-                  boxShadow: [
-                    "0 0 20px hsl(199 89% 48% / 0.3)",
-                    "0 0 40px hsl(199 89% 48% / 0.5)",
-                    "0 0 20px hsl(199 89% 48% / 0.3)"
-                  ]
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-20 h-20 rounded-full bg-primary flex items-center justify-center glow-primary"
+            <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-50" />
+            <div className="relative rounded-xl overflow-hidden border border-primary/20 bg-card/50">
+              <video
+                ref={video1Ref}
+                src={demoVideo1}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto"
+              />
+              <button
+                onClick={() => toggleMute(video1Ref)}
+                className="absolute bottom-4 right-4 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-background transition-all"
               >
-                <Play className="w-8 h-8 text-primary-foreground ml-1" />
-              </motion.div>
-            </motion.div>
+                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              </button>
+            </div>
+            <p className="text-center text-sm text-muted-foreground mt-3">Create verified campaigns in seconds</p>
           </motion.div>
-        </motion.div>
+
+          {/* Demo Video 2 */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="relative group"
+          >
+            <div className="absolute -inset-2 bg-gradient-to-r from-accent/20 to-primary/20 rounded-2xl blur-xl opacity-50" />
+            <div className="relative rounded-xl overflow-hidden border border-primary/20 bg-card/50">
+              <video
+                ref={video2Ref}
+                src={demoVideo2}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto"
+              />
+              <button
+                onClick={() => toggleMute(video2Ref)}
+                className="absolute bottom-4 right-4 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-background transition-all"
+              >
+                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              </button>
+            </div>
+            <p className="text-center text-sm text-muted-foreground mt-3">Share proof-of-activity instantly</p>
+          </motion.div>
+        </div>
         
         {/* Feature highlights below demo */}
         <motion.div
@@ -120,9 +127,9 @@ const DemoSection = () => {
           className="mt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm text-muted-foreground"
         >
           {[
-            { color: "bg-usdc", label: "USDC Gas Fees" },
-            { color: "bg-primary", label: "Sub-second Finality" },
-            { color: "bg-intent-blue", label: "Arc Testnet" },
+            { color: "bg-green-500", label: "Real-time Verification" },
+            { color: "bg-primary", label: "AI Caption Generation" },
+            { color: "bg-intent-blue", label: "Multi-chain Support" },
           ].map((item) => (
             <motion.div 
               key={item.label}
