@@ -1,23 +1,28 @@
 import { motion } from "framer-motion";
-import { TrendingUp, Users, Zap } from "lucide-react";
+import { TrendingUp, Users, Zap, Lock } from "lucide-react";
 
-const chains = [
-  { name: "Base", logo: "https://onchaingm.com/chains/base.jpg", tvl: "$8.2B", txns: "12M+", users: "2.1M" },
-  { name: "Soneium", logo: "https://onchaingm.com/chains/soneium.jpeg", tvl: "$420M", txns: "3.2M+", users: "890K" },
-  { name: "UniChain", logo: "https://onchaingm.com/chains/unichain.jpg", tvl: "$1.8B", txns: "8.5M+", users: "1.2M" },
-  { name: "Linea", logo: "https://onchaingm.com/chains/linea.png", tvl: "$1.2B", txns: "15M+", users: "3.5M" },
-  { name: "Optimism", logo: "https://onchaingm.com/chains/optimism.svg", tvl: "$5.6B", txns: "120M+", users: "4.2M" },
-  { name: "Ink", logo: "https://onchaingm.com/chains/logoInk.png", tvl: "$180M", txns: "1.8M+", users: "420K" },
-  { name: "Plume", logo: "https://onchaingm.com/chains/plume.jpg", tvl: "$95M", txns: "890K+", users: "180K" },
-  { name: "HyperEVM", logo: "https://onchaingm.com/chains/hyperliquid.png", tvl: "$2.4B", txns: "45M+", users: "890K" },
-  { name: "World", logo: "https://onchaingm.com/chains/world.svg", tvl: "$320M", txns: "5.2M+", users: "1.8M" },
-  { name: "Superposition", logo: "https://onchaingm.com/chains/superposition.jpg", tvl: "$45M", txns: "320K+", users: "85K" },
-  { name: "Katana", logo: "https://onchaingm.com/chains/katana.jpg", tvl: "$78M", txns: "1.2M+", users: "210K" },
-  { name: "Plasma", logo: "https://onchaingm.com/chains/Plasma.jpg", tvl: "$56M", txns: "780K+", users: "120K" },
+interface Chain {
+  name: string;
+  logo: string;
+  tvl: string;
+  txns: string;
+  users: string;
+  isLive: boolean;
+}
+
+const chains: Chain[] = [
+  { name: "Arc Network", logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg", tvl: "$12M", txns: "2.5M+", users: "180K", isLive: true },
+  { name: "Base", logo: "https://onchaingm.com/chains/base.jpg", tvl: "$8.2B", txns: "12M+", users: "2.1M", isLive: false },
+  { name: "Soneium", logo: "https://onchaingm.com/chains/soneium.jpeg", tvl: "$420M", txns: "3.2M+", users: "890K", isLive: false },
+  { name: "Pharos Network", logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg", tvl: "$85M", txns: "1.2M+", users: "210K", isLive: false },
+  { name: "Rise Chain", logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg", tvl: "$45M", txns: "890K+", users: "120K", isLive: false },
+  { name: "DataHaven", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", tvl: "$28M", txns: "450K+", users: "65K", isLive: false },
+  { name: "UniChain", logo: "https://onchaingm.com/chains/unichain.jpg", tvl: "$1.8B", txns: "8.5M+", users: "1.2M", isLive: false },
+  { name: "Linea", logo: "https://onchaingm.com/chains/linea.png", tvl: "$1.2B", txns: "15M+", users: "3.5M", isLive: false },
+  { name: "Optimism", logo: "https://onchaingm.com/chains/optimism.svg", tvl: "$5.6B", txns: "120M+", users: "4.2M", isLive: false },
 ];
 
 const ChainCarousel = () => {
-  // Duplicate for seamless loop
   const duplicatedChains = [...chains, ...chains];
 
   return (
@@ -30,15 +35,14 @@ const ChainCarousel = () => {
           className="text-center"
         >
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-            Live Chain Stats
+            Supported Networks
           </h2>
           <p className="text-muted-foreground">
-            Real-time activity across supported networks
+            Multi-chain activity verification • More chains coming soon
           </p>
         </motion.div>
       </div>
 
-      {/* Infinite scroll carousel */}
       <div className="relative">
         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
@@ -58,9 +62,33 @@ const ChainCarousel = () => {
           {duplicatedChains.map((chain, index) => (
             <motion.div
               key={`${chain.name}-${index}`}
-              className="flex-shrink-0 w-64 p-4 rounded-xl bg-card/50 border border-border hover:border-primary/30 transition-all"
-              whileHover={{ y: -4, scale: 1.02 }}
+              className={`relative flex-shrink-0 w-64 p-4 rounded-xl border transition-all ${
+                chain.isLive 
+                  ? "bg-card/50 border-primary/30 hover:border-primary/50" 
+                  : "bg-card/30 border-border"
+              }`}
+              whileHover={{ y: chain.isLive ? -4 : 0, scale: chain.isLive ? 1.02 : 1 }}
             >
+              {/* Soon overlay for non-live chains */}
+              {!chain.isLive && (
+                <div className="absolute inset-0 rounded-xl bg-background/60 backdrop-blur-[2px] z-10 flex items-center justify-center">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/80 border border-border">
+                    <Lock className="w-3 h-3 text-muted-foreground" />
+                    <span className="text-sm font-medium text-muted-foreground">Soon</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Live badge */}
+              {chain.isLive && (
+                <div className="absolute -top-2 -right-2 z-20">
+                  <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                    LIVE
+                  </span>
+                </div>
+              )}
+
               <div className="flex items-center gap-3 mb-4">
                 <img
                   src={chain.logo}
