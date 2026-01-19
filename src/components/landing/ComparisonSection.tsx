@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { X, Check } from "lucide-react";
+import comparisonGeneric from "@/assets/comparison-generic.jpg";
+import comparisonIntent from "@/assets/comparison-intent.jpg";
 
 const ComparisonSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -75,13 +77,17 @@ const ComparisonSection = () => {
               </motion.div>
               
               <motion.div 
-                className="aspect-video rounded-xl bg-muted/20 border border-border flex items-center justify-center"
+                className="aspect-video rounded-xl bg-muted/20 border border-border overflow-hidden"
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                <span className="text-muted-foreground text-sm">Generic placeholder image</span>
+                <img 
+                  src={comparisonGeneric} 
+                  alt="Generic farming post" 
+                  className="w-full h-full object-cover opacity-80"
+                />
               </motion.div>
               
               <motion.ul 
@@ -157,19 +163,17 @@ const ComparisonSection = () => {
               </motion.div>
               
               <motion.div 
-                className="aspect-video rounded-xl bg-gradient-to-br from-primary/20 via-intent-blue/20 to-accent/20 border border-primary/20 flex items-center justify-center overflow-hidden"
+                className="aspect-video rounded-xl bg-gradient-to-br from-primary/20 via-intent-blue/20 to-accent/20 border border-primary/20 overflow-hidden"
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                <motion.span 
-                  className="text-primary text-sm"
-                  animate={{ opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Custom AI-generated image
-                </motion.span>
+                <img 
+                  src={comparisonIntent} 
+                  alt="INTENT generated campaign" 
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
               
               <motion.ul 
