@@ -25,11 +25,18 @@ const chainsData: ChainData[] = [
     logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg",
     isLive: true,
     dapps: [
-      { name: "Lynex", description: "Native DEX on Arc", logo: "https://pbs.twimg.com/profile_images/1738269022744567808/dXM0xFP7_400x400.jpg", url: "https://lynex.fi", category: "DEX" },
-      { name: "Mendi Finance", description: "Lending & Borrowing", logo: "https://pbs.twimg.com/profile_images/1643660081528766464/aWS2vk_k_400x400.jpg", url: "https://mendi.finance", category: "Lending" },
-      { name: "Stargate", description: "Cross-chain bridge", logo: "https://pbs.twimg.com/profile_images/1893011402783137792/5uUB1Asg_400x400.jpg", url: "https://stargate.finance", category: "Bridge" },
-      { name: "Velocore", description: "DEX with ve(3,3)", logo: "https://pbs.twimg.com/profile_images/1609158664046587906/AJzQ3gJx_400x400.jpg", url: "https://velocore.xyz", category: "DEX" },
-      { name: "LayerZero", description: "Omnichain interoperability", logo: "https://pbs.twimg.com/profile_images/1905953498363576320/rbrJn-lj_400x400.jpg", url: "https://layerzero.network", category: "Infrastructure" },
+      { name: "Aave", description: "Lending & Borrowing", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dc93490611b54729de1b_Logomark-dark.svg", url: "https://aave.com", category: "Lending" },
+      { name: "Curve", description: "Stablecoin DEX", logo: "https://pbs.twimg.com/profile_images/1890729178411106304/4ybLLiLo_400x400.jpg", url: "https://curve.fi", category: "DEX" },
+      { name: "Morpho", description: "Optimized lending", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dd4d5ab8afd5b17ea7e3_Morpho-with-background-logo.svg", url: "https://morpho.org", category: "Lending" },
+      { name: "LayerZero", description: "Omnichain protocol", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dfef2b1a23501670b341_LayerZero_emblem.svg", url: "https://layerzero.network", category: "Bridge" },
+      { name: "Fluid", description: "Liquidity protocol", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900e10b5adc0e69ee07601a_fluid-icon.svg", url: "https://fluid.instadapp.io", category: "DeFi" },
+      { name: "Across", description: "Cross-chain bridge", logo: "https://pbs.twimg.com/profile_images/1893011402783137792/5uUB1Asg_400x400.jpg", url: "https://across.to", category: "Bridge" },
+      { name: "Stargate", description: "LayerZero bridge", logo: "https://pbs.twimg.com/profile_images/1893011402783137792/5uUB1Asg_400x400.jpg", url: "https://stargate.finance", category: "Bridge" },
+      { name: "Chainlink", description: "Oracle network", logo: "https://pbs.twimg.com/profile_images/1917579466517921793/r0xBsFnG_400x400.jpg", url: "https://chain.link", category: "Oracle" },
+      { name: "Maple", description: "Institutional lending", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900d56d012d389e7faa891a_%24SYRUP.svg", url: "https://maple.finance", category: "Lending" },
+      { name: "Centrifuge", description: "RWA tokenization", logo: "https://cdn.prod.website-files.com/68af181813eec5493447a1ae/6900dddac70d84fd07dcf2b3_logomark-dark.svg", url: "https://centrifuge.io", category: "RWA" },
+      { name: "Axelar", description: "Cross-chain messaging", logo: "https://pbs.twimg.com/profile_images/1880298382269403136/XbAIqoSf_400x400.jpg", url: "https://axelar.network", category: "Bridge" },
+      { name: "Blockscout", description: "Block explorer", logo: "https://pbs.twimg.com/profile_images/1768698024057581569/nNWumXNE_400x400.jpg", url: "https://blockscout.com", category: "Explorer" },
     ]
   },
   {
