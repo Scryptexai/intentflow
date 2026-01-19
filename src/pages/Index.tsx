@@ -7,6 +7,7 @@ import ValuePropsSection from "@/components/landing/ValuePropsSection";
 import DemoSection from "@/components/landing/DemoSection";
 import ComparisonSection from "@/components/landing/ComparisonSection";
 import SocialProofSection from "@/components/landing/SocialProofSection";
+import { LiveActivityFeed } from "@/components/landing/LiveActivityFeed";
 import TrustSection from "@/components/landing/TrustSection";
 import FAQSection from "@/components/landing/FAQSection";
 import CTASection from "@/components/landing/CTASection";
@@ -29,6 +30,7 @@ const Index = () => {
           <ValuePropsSection />
           <ComparisonSection />
           <SocialProofSection />
+          <LiveActivityFeed />
           <TrustSection />
           <FAQSection />
           <CTASection />
