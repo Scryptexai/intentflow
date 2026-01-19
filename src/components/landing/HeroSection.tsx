@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { Rocket, Zap } from "lucide-react";
+import { Rocket, Zap, Shield } from "lucide-react";
 
 const chains = [
-  { name: "Base", logo: "https://onchaingm.com/chains/base.jpg" },
-  { name: "Soneium", logo: "https://onchaingm.com/chains/soneium.jpeg" },
-  { name: "UniChain", logo: "https://onchaingm.com/chains/unichain.jpg" },
-  { name: "Optimism", logo: "https://onchaingm.com/chains/optimism.svg" },
-  { name: "Linea", logo: "https://onchaingm.com/chains/linea.png" },
+  { name: "Arc Network", logo: "https://pbs.twimg.com/profile_images/1829565692498993154/MKbMRBP0_400x400.jpg", isLive: true },
+  { name: "Pharos", logo: "https://pbs.twimg.com/profile_images/1869571083962015744/FQoHm0iW_400x400.jpg", isLive: false },
+  { name: "Rise Chain", logo: "https://pbs.twimg.com/profile_images/1867542058355638273/qDQeFiED_400x400.jpg", isLive: false },
+  { name: "DataHaven", logo: "https://pbs.twimg.com/profile_images/1913194376966791168/f1WfOv-y_400x400.jpg", isLive: false },
+  { name: "Soneium", logo: "https://onchaingm.com/chains/soneium.jpeg", isLive: false },
 ];
 
 const HeroSection = () => {
@@ -20,8 +20,8 @@ const HeroSection = () => {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6"
         >
-          <Zap className="w-4 h-4" />
-          Multi-Chain On-Chain Proof System
+          <Shield className="w-4 h-4" />
+          On-Chain Proof of Activity
         </motion.div>
         
         {/* Main Headline */}
@@ -29,11 +29,11 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-5"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-tight"
         >
-          <span className="text-foreground">Stop Yapping.</span>
+          <span className="text-foreground">Stop Farming Blindly.</span>
           <br />
-          <span className="text-gradient">Start Proving.</span>
+          <span className="text-gradient">Prove Your Real On-Chain Activity.</span>
         </motion.h1>
         
         {/* Subheadline */}
@@ -41,10 +41,10 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
+          className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
         >
-          Generate AI-powered campaign content from your real on-chain activity. 
-          <span className="text-foreground font-medium"> For yappers, builders, and degens</span> across every chain.
+          INTENT verifies swaps, bridges, and LPs — then generates 
+          <span className="text-foreground font-medium"> shareable proof and campaign content.</span>
         </motion.p>
         
         {/* CTA Buttons */}
@@ -91,7 +91,11 @@ const HeroSection = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5 + i * 0.05 }}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-card/50 border border-border text-sm"
+                className={`relative flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm ${
+                  chain.isLive 
+                    ? "bg-primary/10 border-primary/30" 
+                    : "bg-card/50 border-border opacity-60"
+                }`}
               >
                 <img 
                   src={chain.logo} 
@@ -99,10 +103,15 @@ const HeroSection = () => {
                   className="w-5 h-5 rounded-full object-cover"
                   onError={(e) => { e.currentTarget.style.display = 'none'; }}
                 />
-                <span className="text-muted-foreground">{chain.name}</span>
+                <span className={chain.isLive ? "text-foreground" : "text-muted-foreground"}>
+                  {chain.name}
+                </span>
+                {chain.isLive && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                )}
               </motion.div>
             ))}
-            <span className="text-muted-foreground text-sm">+20 more</span>
+            <span className="text-muted-foreground text-sm">+more soon</span>
           </div>
         </motion.div>
       </div>
